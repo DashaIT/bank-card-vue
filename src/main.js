@@ -1,4 +1,9 @@
 import { createApp } from 'vue';
+import App from  './App';
+import VFocus from '@/directives/VFocus';
 
+const app = createApp(App);
 
-createApp(App).mount('#app')
+app
+    .directive('focus', VFocus)
+    .mount('#app');

@@ -7,13 +7,20 @@
                 <div class="card__body">
                     <div class="input input--pan">
                         <label for="pan" class="input__label">Номер карты</label>
-                        <input-field v-model="pan" v-focus id="pan" name="pan" max-length="19"
-                            placeholder="1234 5678 1234 5678" tabindex="1" />
+                        <input-field 
+                            v-model="pan" 
+                            v-focus 
+                            id="pan" 
+                            name="pan"                            
+                            maxlength="19"
+                            placeholder="1234 5678 1234 5678" 
+                            @user-input="inputPan"
+                            tabindex="1" />
                     </div>
 
                     <div class="input input--date">
                         <label for="date" class="input__label">Месяц / год</label>
-                        <input-field v-model="date" id="date" name="date" max-lenght="7" placeholder="ММ / ГГ"
+                        <input-field v-model="date" id="date" name="date" maxlength="7" placeholder="ММ / ГГ"
                             tabindex="2" />
                     </div>
 
@@ -21,12 +28,21 @@
                         <div class="cvc-icon"></div>
                         <div class="cvc-tooltip">Три цифры с обратной стороны карты</div>
                         <label for="cvc" class="input__label">CVV / CVC</label>
-                        <input-field v-model="cvc" id="cvc" name="cvc" max-length="3" placeholder="123" tabindex="3" />
+                        <input-field 
+                            v-model="cvc" 
+                            id="cvc" 
+                            name="cvc" 
+                            maxlength="3" 
+                            placeholder="123" 
+                            tabindex="3" 
+                            @user-input="inputCvc"
+                            />
                     </div>
                 </div>
             </div>
             <div class="save-card-block">
-                <input type="checkbox" class="save-card" v-model="saveCard" name="save-card" id="save-card">
+                <input type="checkbox" class="save-card" :checked="saveCard" @change="onSave" name="save-card" id="save-card">
+                
                 <label for="save-card" class="save-card-label">
                     Сохранить карту для следующих покупок
                 </label>
@@ -46,10 +62,10 @@
                 <img src="../public/img/ps-logos.svg" alt="">
             </div>
             <div class="secure">
-                <img src="../public/img/ic_lock.svg" alt="">               
+                <img src="../public/img/ic_lock.svg" alt="">
                 <span>Данные банковской карты будут переданы в зашифрованном виде</span>
             </div>
-            <div class="order_id">            
+            <div class="order_id">
                 Заказ № {{ orderId }}
             </div>
         </footer>
@@ -58,9 +74,11 @@
 
 <script>
 import InputField from "@/components/InputField.vue";
+import Checkbox from "@/components/Checkbox.vue";
+import {formatCardNumber, formatDate, formatCvc} from '@/utils/formatting';
 export default {
     components: {
-        InputField
+        InputField, Checkbox
     },
     data: () => {
         return {
@@ -71,6 +89,20 @@ export default {
             orderId: 112480
         }
     },
+    methods: {
+        onSave(event) {
+            this.saveCard = event.target.checked;
+        },
+        inputPan(event) {
+            this.pan = formatCardNumber(event.target.value);
+        },
+        inputDate(event) {
+            this.date = formatDate(event.target.value);
+        },
+        inputCvc(event) {
+            this.cvc = formatCvc(event.target.value);
+        }
+    }
 }
 </script>
 
@@ -177,7 +209,7 @@ body {
     position: absolute;
     left: 13px;
     top: -55px;
-    width: 152px;
+    width: 136px;
     height: 50px;
     background-image: url(../public/img/tooltip.svg);
     background-position: center;
@@ -275,13 +307,14 @@ body {
 
 .secure {
     display: flex;
-    align-items: center;    
+    align-items: center;
     width: 210px;
     margin-bottom: 16px;
     margin-top: 24px;
 }
 
-.secure, .order_id {
+.secure,
+.order_id {
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
@@ -289,12 +322,12 @@ body {
     color: #A6A6A6;
 }
 
-.secure img, .secure span  {
+.secure img,
+.secure span {
     display: block;
 }
 
 .secure img {
     margin-right: 6px;
 }
-
 </style>

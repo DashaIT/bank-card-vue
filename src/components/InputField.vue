@@ -11,8 +11,7 @@
 export default {
         name: 'input-field',
         props: {
-            modelValue: String,
-            handler: Function            
+            modelValue: String,                  
         },
         methods: {
             updateInput(event) {

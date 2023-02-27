@@ -20,7 +20,12 @@
 
                     <div class="input input--date">
                         <label for="date" class="input__label">Месяц / год</label>
-                        <input-field v-model="date" id="date" name="date" maxlength="7" placeholder="ММ / ГГ"
+                        <input-field 
+                            v-model="date" 
+                            id="date" 
+                            name="date" 
+                            maxlength="7" 
+                            placeholder="ММ / ГГ"
                             tabindex="2" />
                     </div>
 
@@ -41,8 +46,8 @@
                 </div>
             </div>
             <div class="save-card-block">
-                <input type="checkbox" class="save-card" :checked="saveCard" @change="onSave" name="save-card" id="save-card">
-                
+                <input type="checkbox" class="save-card" v-model="saveCard" @change="onSave" name="save-card" id="save-card">
+                <!-- <checkbox-input v-model:checked="saveCard" id="save-card" name="save-card" /> -->
                 <label for="save-card" class="save-card-label">
                     Сохранить карту для следующих покупок
                 </label>
@@ -73,9 +78,9 @@
 </template>
 
 <script>
-import InputField from "@/components/InputField.vue";
 import Checkbox from "@/components/Checkbox.vue";
-import {formatCardNumber, formatDate, formatCvc} from '@/utils/formatting';
+import InputField from "@/components/InputField.vue";
+import {formatCardNumber, formatDate, formatCvc} from '@/utils/formating';
 export default {
     components: {
         InputField, Checkbox
@@ -97,7 +102,7 @@ export default {
             this.pan = formatCardNumber(event.target.value);
         },
         inputDate(event) {
-            this.date = formatDate(event.target.value);
+            this.date = formatDate(event.target.value, event);
         },
         inputCvc(event) {
             this.cvc = formatCvc(event.target.value);

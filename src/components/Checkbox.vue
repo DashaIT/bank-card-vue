@@ -2,7 +2,7 @@
     <input 
         type="checkbox" 
         class="save-card" 
-        :checked="saveCard" 
+        :checked="checked" 
         @change="updateCheckbox"
         name="save-card" 
         >
@@ -11,9 +11,9 @@
 
 <script>
 export default {
-        name: 'CheckBoxInput',
+        name: 'checkbox-input',
         props: {
-            modelValue: {
+            checked: {
                 type: Boolean,
                 default: false
             }

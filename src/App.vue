@@ -81,6 +81,9 @@
 import Checkbox from "@/components/Checkbox.vue";
 import InputField from "@/components/InputField.vue";
 import {formatCardNumber, formatDate, formatCvc} from '@/utils/formating';
+import useVuelidate from '@vuelidate/core'
+import {required, helpers, minLength} from '@vuelidate/validators'
+
 export default {
     components: {
         InputField, Checkbox
@@ -106,6 +109,13 @@ export default {
         },
         inputCvc(event) {
             this.cvc = formatCvc(event.target.value);
+        }
+    },
+    validations() {
+        return {
+            pan: {required},
+            date: {required},
+            cvc: {required}
         }
     }
 }

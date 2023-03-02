@@ -11,11 +11,12 @@
                             v-model="pan" 
                             v-focus 
                             id="pan" 
-                            name="pan"                            
+                            name="pan" 
                             maxlength="19"
-                            placeholder="1234 5678 1234 5678" 
-                            @user-input="inputPan"
-                            tabindex="1" />
+                            placeholder="1234 5678 1234 5678"
+                            tabindex="1" 
+                            @input="inputPan"
+                            />
                     </div>
 
                     <div class="input input--date">
@@ -26,7 +27,9 @@
                             name="date" 
                             maxlength="7" 
                             placeholder="ММ / ГГ"
-                            tabindex="2" />
+                            tabindex="2" 
+                            @input="inputDate"
+                            />
                     </div>
 
                     <div class="input input--cvc">
@@ -39,15 +42,14 @@
                             name="cvc" 
                             maxlength="3" 
                             placeholder="123" 
-                            tabindex="3" 
-                            @user-input="inputCvc"
-                            />
+                            tabindex="3"
+                            @input="inputCvc"
+                           />
                     </div>
                 </div>
             </div>
-            <div class="save-card-block">
-                <input type="checkbox" class="save-card" v-model="saveCard" @change="onSave" name="save-card" id="save-card">
-                <!-- <checkbox-input v-model:checked="saveCard" id="save-card" name="save-card" /> -->
+            <div class="save-card-block">                
+                <checkbox-input v-model:checked="saveCard" id="save-card" name="save-card" />
                 <label for="save-card" class="save-card-label">
                     Сохранить карту для следующих покупок
                 </label>
@@ -78,15 +80,15 @@
 </template>
 
 <script>
-import Checkbox from "@/components/Checkbox.vue";
+import CheckboxInput from "@/components/Checkbox.vue";
 import InputField from "@/components/InputField.vue";
-import {formatCardNumber, formatDate, formatCvc} from '@/utils/formating';
+import { formatCardNumber, formatDate, formatCvc } from '@/utils/formating';
 import useVuelidate from '@vuelidate/core'
-import {required, helpers, minLength} from '@vuelidate/validators'
+import { required, helpers, minLength } from '@vuelidate/validators'
 
 export default {
     components: {
-        InputField, Checkbox
+        InputField, CheckboxInput
     },
     data: () => {
         return {
@@ -113,9 +115,9 @@ export default {
     },
     validations() {
         return {
-            pan: {required},
-            date: {required},
-            cvc: {required}
+            pan: { required },
+            date: { required },
+            cvc: { required }
         }
     }
 }
@@ -128,13 +130,6 @@ body {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
 }
-
-/* .container {
-        display: flex;        
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-items: center;
-    } */
 
 .form {
     display: flex;

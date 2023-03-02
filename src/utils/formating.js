@@ -4,14 +4,14 @@ export function formatCardNumber(pan) {
 
 export function formatDate(value, event) {
     if (event && event.inputType === 'deleteContentBackward') return value
-    let formattedDate = value.replace(/\D/g,'');
+    let formattedDate = value.replace(/\D/g,'');    
+
+    if (formattedDate.length >= 3) {
+        formattedDate = formattedDate.slice(0,2) + ' / ' + formattedDate.slice(2,4)
+    }
 
     if (formattedDate.length === 2) {        
         formattedDate = formattedDate + ' / '
-    }
-
-    if (formattedDate.length >= 3) {
-        formattedDate = formattedDate.slice(0,2) + ' / ' + formattedDate(2,4)
     }
 
     if (formattedDate.length > 2) {

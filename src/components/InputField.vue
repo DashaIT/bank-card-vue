@@ -1,7 +1,6 @@
 <template>    
     <input 
-        :value="modelValue"        
-        @input="updateInput"        
+        v-model="localComputed"       
         class="input__field"
         type="text"
     >
@@ -12,10 +11,15 @@ export default {
         name: 'input-field',
         props: {
             modelValue: String,                  
-        },
-        methods: {
-            updateInput(event) {
-                this.$emit('user-input', event)
+        },        
+        computed: {
+            localComputed: {
+                get() {
+                    return this.modelValue
+                },
+                set(newValue) {
+                    this.$emit('update:modelValue', newValue)
+                }
             }
         }
     }

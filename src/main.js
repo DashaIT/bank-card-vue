@@ -5,7 +5,6 @@ import Vuelidate from 'vuelidate'
 
 const app = createApp(App);
 
-app 
-    // .use(Vuelidate)
+app     
     .directive('focus', VFocus)
     .mount('#app');

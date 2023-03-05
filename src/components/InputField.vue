@@ -1,7 +1,7 @@
 <template>    
     <input 
         v-model="localComputed"       
-        class="input__field"
+        class="input__field"        
         type="text"
     >
 </template>

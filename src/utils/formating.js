@@ -4,26 +4,30 @@ export function formatCardNumber(pan) {
 
 export function formatDate(value, event) {
     if (event && event.inputType === 'deleteContentBackward') return value
-    let formattedDate = value.replace(/\D/g,'');    
+    let formattedValue = value.replace(/\D/g, '').length > 4 ?
+        value.replace(/\D/g, '').substring(0, 2) + value.replace(/\D/g, '').substring(4, 6) :
+        value.replace(/\D/g, '').substring(0, 4)
 
-    if (formattedDate.length >= 3) {
-        formattedDate = formattedDate.slice(0,2) + ' / ' + formattedDate.slice(2,4)
+
+    if (formattedValue.length >= 3) {
+        formattedValue = formattedValue.substring(0, 2) + ' / ' + formattedValue.substring(2, 4);
     }
 
-    if (formattedDate.length === 2) {        
-        formattedDate = formattedDate + ' / '
+    if (formattedValue.length === 2) {
+        formattedValue = formattedValue + ' / '
     }
 
-    if (formattedDate.length > 2) {
-        if (parseInt(formattedDate.split('/')[0]) === 0) {
-            formattedDate = '01' + formattedDate.slice(2,4)
+    if (formattedValue.length > 2) {
+
+        if (parseInt(formattedValue.split(' / ')[0]) === 0) {
+            formattedValue = '01' + formattedValue.substring(2, 4);
         }
 
-        if (parseInt(formattedDate.split('/')[0]) > 12) {
-            formattedDate = '12' + formattedDate.slice(2,4)
+        if (parseInt(formattedValue.split(' / ')[0]) > 12) {
+            formattedValue = 12 + formattedValue.substring(2, 4);
         }
     }
-    return formattedDate
+    return formattedValue
 }
 
 export function formatCvc(cvc) {    

@@ -20,6 +20,7 @@ export default {
     box-shadow: 2px 2px 4px gray;
 }
 .navbar__btns {
-    margin-left: auto;
+    margin-right: 50px;
+    cursor: pointer
 }
 </style>

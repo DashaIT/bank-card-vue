@@ -8,30 +8,15 @@
                 <div class="card__body">
                     <div class="input input--pan">
                         <label for="pan" class="input__label">Номер карты</label>
-                        <input-field   
-                            v-model="pan" 
-                            v-focus 
-                            id="pan" 
-                            name="pan" 
-                            ref="ref" 
-                            maxlength="19"
-                            placeholder="1234 5678 1234 5678" 
-                            tabindex="1" 
-                            @input="inputPan" />
+                        <input-field v-model="pan" v-focus id="pan" name="pan" ref="ref" maxlength="19"
+                            placeholder="1234 5678 1234 5678" tabindex="1" @input="inputPan" />
                         <span v-if="v$.pan.$error" class="input__error">{{ v$.pan.$errors[0].$message }}</span>
                     </div>
 
                     <div class="input input--date">
                         <label for="date" class="input__label">Месяц / год</label>
-                        <input-field 
-                            v-model="date" 
-                            id="date" 
-                            name="date" 
-                            ref="date" 
-                            maxlength="7" 
-                            placeholder="ММ / ГГ"
-                            tabindex="2" 
-                            @input="inputDate" />
+                        <input-field v-model="date" id="date" name="date" ref="date" maxlength="7" placeholder="ММ / ГГ"
+                            tabindex="2" @input="inputDate" />
                         <span v-if="v$.date.$error" class="input__error">{{ v$.date.$errors[0].$message }}</span>
                     </div>
 
@@ -39,31 +24,21 @@
                         <div class="cvc-icon"></div>
                         <div class="cvc-tooltip">Три цифры с обратной стороны карты</div>
                         <label for="cvc" class="input__label">CVV / CVC</label>
-                        <input-field 
-                            v-model="cvc" 
-                            id="cvc" 
-                            name="cvc" 
-                            ref="cvc" 
-                            maxlength="3" 
-                            placeholder="123"
-                            tabindex="3" 
-                            @input="inputCvc" />
+                        <input-field v-model="cvc" id="cvc" name="cvc" ref="cvc" maxlength="3" placeholder="123"
+                            tabindex="3" @input="inputCvc" />
                         <span v-if="v$.cvc.$error" class="input__error">{{ v$.cvc.$errors[0].$message }}</span>
                     </div>
                 </div>
             </div>
             <div class="save-card-block">
-                <checkbox-input 
-                    v-model:checked="saveCard" 
-                    id="save-card" 
-                    name="save-card" />
+                <checkbox-input v-model:checked="saveCard" id="save-card" name="save-card" />
                 <label for="save-card" class="save-card-label">
                     Сохранить карту для следующих покупок
                 </label>
             </div>
 
             <div class="button__container">
-                <button type="submit" class="submit-button" id="submitButton">
+                <button type="submit" class="submit-button" id="submitButton" :disabled="buttonDisabled">
                     Оплатить
                 </button>
                 <div class="oferta">
@@ -108,6 +83,11 @@ export default {
             orderId: 112480
         }
     },
+    computed: {
+        buttonDisabled() {
+            return !!this.v$.$invalid
+        }
+    },
     methods: {
         onSave(event) {
             this.saveCard = event.target.checked;
@@ -150,5 +130,4 @@ export default {
 }
 </script>
 
-<style src="@/styles/main.css">
-</style>
+<style src="@/styles/main.css"></style>

@@ -1,16 +1,29 @@
-<template>    
-    <input 
-        v-model="localComputed"       
-        class="input__field"        
-        type="text"
-    >
+<template>
+    <div class="input" :class="'input--' + name">
+        <slot></slot>        
+        <label class="input__label">{{ label }}
+            <input 
+                v-model="localComputed"       
+                class="input__field"        
+                :type="type" 
+                v-bind="$attrs" 
+                @blur="vObj.$touch()"              
+            >
+        </label>
+        <span v-if="vObj.$error" class="input__error">{{ vObj.$errors[0].$message }}</span>
+    </div>
 </template>
 
 <script>
 export default {
         name: 'input-field',
+        inheritAttrs: false,
         props: {
-            modelValue: String,                  
+            modelValue: String,
+            vObj: Object,
+            label: String,    
+            name: String,
+            type: String        
         },        
         computed: {
             localComputed: {
@@ -21,7 +34,7 @@ export default {
                     this.$emit('update:modelValue', newValue)
                 }
             }
-        }
+        },        
     }
 </script>
 
@@ -43,6 +56,12 @@ export default {
 }
 .input__field:focus {
     outline: none;
+    border-bottom: 1px solid #FF335F;
+    caret-color: #FF335F;
+}
+
+.input__field:hover {
+    border-bottom: 1px solid #FF335F;
 }
     
 </style>

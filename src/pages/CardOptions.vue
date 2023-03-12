@@ -12,7 +12,7 @@
                             v-focus 
                             id="pan" 
                             name="pan"                                                         
-                            ref="ref" 
+                            ref="pan" 
                             label="Номер карты"
                             maxlength="19"
                             placeholder="1234 5678 1234 5678" 

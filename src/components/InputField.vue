@@ -5,9 +5,9 @@
             <input 
                 v-model="localComputed"       
                 class="input__field"        
-                :type="type" 
+                :type="type"                 
                 v-bind="$attrs" 
-                @blur="vObj.$touch()"              
+                @blur="vObj.$touch()"                            
             >
         </label>
         <span v-if="vObj.$error" class="input__error">{{ vObj.$errors[0].$message }}</span>
@@ -34,7 +34,7 @@ export default {
                     this.$emit('update:modelValue', newValue)
                 }
             }
-        },        
+        },             
     }
 </script>
 

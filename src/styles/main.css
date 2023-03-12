@@ -163,6 +163,7 @@ h1 {
 }
 
 .submit-button {
+    position: relative;
     width: 100%;
     max-width: 295px;
     height: 64px;
@@ -189,6 +190,24 @@ h1 {
 .submit-button:hover:not(:disabled) {
     background: #FF446D;
     box-shadow: 0px 0px 16px #FF335F;
+}
+
+.submit-button.hasloader {
+    color: transparent;    
+}
+
+.submit-button.hasloader::after {
+    content: '';   
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 12px);
+    width: 24px;
+    height: 24px;    
+    background-image: url(/public/img/spinner.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-animation: 1s linear infinite spinner-border;
+    animation: 1s linear infinite spinner-border;
 }
 
 .oferta {
@@ -241,4 +260,19 @@ h1 {
 
 .secure img {
     margin-right: 6px;
+}
+
+
+@-webkit-keyframes spinner-border {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes spinner-border {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
 }

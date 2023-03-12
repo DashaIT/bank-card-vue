@@ -38,7 +38,7 @@
             </div>
 
             <div class="button__container">
-                <button type="submit" class="submit-button" id="submitButton" :disabled="buttonDisabled">
+                <button type="submit" class="submit-button" :class="{hasloader: isLoading}" id="submitButton" :disabled="buttonDisabled">
                     Оплатить
                 </button>
                 <div class="oferta">
@@ -80,7 +80,8 @@ export default {
             date: '',
             cvc: '',
             saveCard: true,
-            orderId: 112480
+            orderId: 112480,
+            isLoading: false
         }
     },
     computed: {
@@ -107,8 +108,11 @@ export default {
         inputCvc(event) {
             this.cvc = formatCvc(event.target.value);
         },
-        submitForm(event) {
+        submitForm(event) {            
             this.v$.$validate();
+            if (!this.v$.$invalid) {
+                this.isLoading = true
+            }
         }
     },
     validations() {

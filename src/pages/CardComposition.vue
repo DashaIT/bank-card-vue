@@ -1,69 +1,67 @@
 <template>
     <div>
-        <h1>Composition</h1>
+        <h1>Options</h1>
         <form action="#" class="form" @submit.prevent="submitForm">
             <div class="card">
                 <img src="../../public/img/bankLogo.svg" alt="tinkoff" class="card__logo">
 
                 <div class="card__body">
-                    <div class="input input--pan">
-                        <label for="pan" class="input__label">Номер карты</label>
-                        <input-field   
+                    
+                        <input-field 
                             v-model="pan" 
                             v-focus 
                             id="pan" 
-                            name="pan" 
-                            ref="ref" 
+                            name="pan"                                                         
+                            ref="pan" 
+                            label="Номер карты"
                             maxlength="19"
                             placeholder="1234 5678 1234 5678" 
                             tabindex="1" 
-                            @input="inputPan" />
-                        <span v-if="v$.pan.$error" class="input__error">{{ v$.pan.$errors[0].$message }}</span>
-                    </div>
-
-                    <div class="input input--date">
-                        <label for="date" class="input__label">Месяц / год</label>
+                            type="text"
+                            :v-obj="v$.pan"                            
+                            @input="inputPan" /> 
+                                      
                         <input-field 
                             v-model="date" 
                             id="date" 
                             name="date" 
                             ref="date" 
+                            label="Месяц / год"
                             maxlength="7" 
                             placeholder="ММ / ГГ"
                             tabindex="2" 
-                            @input="inputDate" />
-                        <span v-if="v$.date.$error" class="input__error">{{ v$.date.$errors[0].$message }}</span>
-                    </div>
-
-                    <div class="input input--cvc">
-                        <div class="cvc-icon"></div>
-                        <div class="cvc-tooltip">Три цифры с обратной стороны карты</div>
-                        <label for="cvc" class="input__label">CVV / CVC</label>
+                            type="text"
+                            :v-obj="v$.date"
+                            @input="inputDate" /> 
+                        
                         <input-field 
                             v-model="cvc" 
                             id="cvc" 
                             name="cvc" 
-                            ref="cvc" 
+                            ref="cvc"
+                            label="CVV / CVC"
                             maxlength="3" 
                             placeholder="123"
                             tabindex="3" 
-                            @input="inputCvc" />
-                        <span v-if="v$.cvc.$error" class="input__error">{{ v$.cvc.$errors[0].$message }}</span>
-                    </div>
+                            type="text"
+                            :v-obj="v$.cvc"
+                            @input="inputCvc"
+                        >
+                            <div class="cvc-icon"></div>
+                            <div class="cvc-tooltip">Три цифры с обратной стороны карты</div>
+                        </input-field>                        
+                    
                 </div>
             </div>
             <div class="save-card-block">
-                <checkbox-input 
-                    v-model:checked="saveCard" 
-                    id="save-card" 
-                    name="save-card" />
+                <checkbox-input v-model:checked="saveCard" id="save-card" name="save-card" />
                 <label for="save-card" class="save-card-label">
                     Сохранить карту для следующих покупок
                 </label>
             </div>
 
             <div class="button__container">
-                <button type="submit" class="submit-button" id="submitButton">
+                <button type="submit" class="submit-button" :class="{hasloader: isLoading}" id="submitButton" :disabled="buttonDisabled">
                     Оплатить
                 </button>
                 <div class="oferta">
@@ -105,7 +103,13 @@ export default {
             date: '',
             cvc: '',
             saveCard: true,
-            orderId: 112480
+            orderId: 112480,
+            isLoading: false
+        }
+    },
+    computed: {
+        buttonDisabled() {
+            return !!this.v$.$invalid
         }
     },
     methods: {
@@ -127,8 +131,11 @@ export default {
         inputCvc(event) {
             this.cvc = formatCvc(event.target.value);
         },
-        submitForm(event) {
+        submitForm(event) {            
             this.v$.$validate();
+            if (!this.v$.$invalid) {
+                this.isLoading = true
+            }
         }
     },
     validations() {
@@ -150,5 +157,4 @@ export default {
 }
 </script>
 
-<style src="@/styles/main.css">
-</style>
+<style src="@/styles/main.css"></style>

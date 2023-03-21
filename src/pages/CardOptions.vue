@@ -109,7 +109,7 @@ export default {
     },
     computed: {
         buttonDisabled() {
-            return !!this.v$.$invalid
+            return !!this.v$.$invalid || !!this.isLoading
         }
     },
     methods: {
@@ -119,13 +119,14 @@ export default {
         inputPan(event) {
             this.pan = formatCardNumber(event.target.value);
             if (this.pan.length === 19) {
-                this.$refs.date.$el.focus();
+                this.$refs.date.$el.children[0].focus();
             }
         },
         inputDate(event) {
-            this.date = formatDate(event.target.value, event);
+            this.date = formatDate(event.target.value, event);            
             if (this.date.length === 7) {
-                this.$refs.cvc.$el.focus();
+                console.log(this.$refs.cvc.$el.children);
+                this.$refs.cvc.$el.children[2].children[0].focus();
             }
         },
         inputCvc(event) {
@@ -134,7 +135,7 @@ export default {
         submitForm(event) {            
             this.v$.$validate();
             if (!this.v$.$invalid) {
-                this.isLoading = true
+                this.isLoading = true                
             }
         }
     },

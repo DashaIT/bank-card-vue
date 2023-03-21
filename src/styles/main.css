@@ -70,6 +70,15 @@ h1 {
     color: #A6A6A6;
 }
 
+.error .input__label{
+    color: #FF3B30;
+}
+
+.error .input__field {
+    color: #FF3B30;
+    border-bottom: 1px solid #FF3B30;
+}
+
 .input__error {
     position: absolute;
     font-weight: 400;

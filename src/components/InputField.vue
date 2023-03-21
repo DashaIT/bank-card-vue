@@ -1,5 +1,5 @@
-<template>
-    <div class="input" :class="'input--' + name">
+<template>   
+    <div class="input" :class="[nameClass, errorClass]">    
         <slot></slot>        
         <label class="input__label">{{ label }}
             <input 
@@ -24,7 +24,12 @@ export default {
             label: String,    
             name: String,
             type: String        
-        },        
+        }, 
+        data() {
+            return {
+                nameClass: 'input--' + this.$props.name
+            }
+        },       
         computed: {
             localComputed: {
                 get() {
@@ -33,7 +38,11 @@ export default {
                 set(newValue) {
                     this.$emit('update:modelValue', newValue)
                 }
+            },  
+            errorClass() {
+                return this.$props.vObj.$error ? 'error' : ''
             }
+
         },             
     }
 </script>

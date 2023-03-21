@@ -11,6 +11,10 @@ const routes = [
     {
         path: '/composition',
         component: CardComposition
+    },
+    {
+        path: '/',
+        redirect: '/options'
     }
 ]
 

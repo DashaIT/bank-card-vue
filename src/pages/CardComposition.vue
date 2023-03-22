@@ -91,56 +91,52 @@ import { formatCardNumber, formatDate, formatCvc } from '@/utils/formating';
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers, minLength } from '@vuelidate/validators';
 import { validatePan, checkDate } from '@/utils/validation';
+import { ref, computed } from 'vue';
 
 export default {
     components: {
         InputField, CheckboxInput
     },
-    data: () => {
-        return {
-            v$: useVuelidate(),
-            pan: '',
-            date: '',
-            cvc: '',
-            saveCard: true,
-            orderId: 112480,
-            isLoading: false
-        }
-    },
-    computed: {
-        buttonDisabled() {
-            return !!this.v$.$invalid || !!this.isLoading
-        }
-    },
-    methods: {
-        onSave(event) {
-            this.saveCard = event.target.checked;
-        },
-        inputPan(event) {
-            this.pan = formatCardNumber(event.target.value);
-            if (this.pan.length === 19) {
-                this.$refs.date.$el.children[0].focus();
-            }
-        },
-        inputDate(event) {
-            this.date = formatDate(event.target.value, event);            
-            if (this.date.length === 7) {
-                console.log(this.$refs.cvc.$el.children);
-                this.$refs.cvc.$el.children[2].children[0].focus();
-            }
-        },
-        inputCvc(event) {
-            this.cvc = formatCvc(event.target.value);
-        },
-        submitForm(event) {            
-            this.v$.$validate();
-            if (!this.v$.$invalid) {
-                this.isLoading = true                
+
+    setup() {        
+        const pan = ref('');
+        const date = ref('');
+        const cvc = ref('');
+        const saveCard = ref(true);
+        const orderId = 112480;
+        const isLoading = ref(false);
+
+        const onSave = (event) => saveCard.value = event.target.checked;
+
+        function inputPan(event) {
+            pan.value = formatCardNumber(event.target.value);
+            if (pan.value.length === 19) {
+               $refs.date.$el.children[0].focus();
             }
         }
-    },
-    validations() {
-        return {
+
+        function inputDate(event) {
+            date.value = formatDate(event.target.value, event);            
+            if (date.value.length === 7) {                
+                $refs.cvc.$el.children[2].children[0].focus();
+            }
+        }
+
+        const inputCvc = (event) => cvc.value = formatCvc(event.target.value);        
+
+        function submitForm(event) {            
+            v$.$validate();
+            if (!v$.$invalid) {
+                isLoading.value = true                
+            }
+        }
+
+        const buttonDisabled = computed(() => {
+                return !!v$.$invalid || !!isLoading.value
+            }
+        )
+
+        const rules = {
             pan: {
                 required: helpers.withMessage('Поле обязательно', required),
                 validatePan: helpers.withMessage('Неверный номер карты', validatePan)
@@ -154,8 +150,16 @@ export default {
                 minLength: helpers.withMessage('Неверный CVC', minLength(3))
             }
         }
-    }
+
+        const v$ = useVuelidate(rules, {pan, date, cvc});
+
+        return {
+            v$, pan, date, cvc, saveCard, orderId, isLoading,
+            submitForm, onSave, inputPan, inputDate, inputCvc, buttonDisabled
+        }
+    },    
 }
+
 </script>
 
 <style src="@/styles/main.css"></style>

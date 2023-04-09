@@ -119,14 +119,13 @@ export default {
         inputPan(event) {
             this.pan = formatCardNumber(event.target.value);
             if (this.pan.length === 19) {
-                this.$refs.date.$el.children[0].focus();
+                this.$refs.date.onFocus();
             }
         },
         inputDate(event) {
             this.date = formatDate(event.target.value, event);            
-            if (this.date.length === 7) {
-                console.log(this.$refs.cvc.$el.children);
-                this.$refs.cvc.$el.children[2].children[0].focus();
+            if (this.date.length === 7) {                
+                this.$refs.cvc.onFocus();
             }
         },
         inputCvc(event) {

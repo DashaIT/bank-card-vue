@@ -7,6 +7,7 @@
                 class="input__field"        
                 :type="type"                 
                 v-bind="$attrs" 
+                ref="element"
                 @blur="vObj.$touch()"                            
             >
         </label>
@@ -43,7 +44,12 @@ export default {
                 return this.$props.vObj.$error ? 'error' : ''
             }
 
-        },             
+        },
+        methods: {
+            onFocus() {
+                this.$refs.element.focus()
+            }
+        }             
     }
 </script>
 

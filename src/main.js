@@ -1,10 +1,11 @@
 import { createApp } from 'vue';
 import App from  './App';
 import VFocus from '@/directives/VFocus';
-import Vuelidate from 'vuelidate'
+import router from '@/router/router';
 
 const app = createApp(App);
 
-app     
+app
+    .use(router)
     .directive('focus', VFocus)
     .mount('#app');
